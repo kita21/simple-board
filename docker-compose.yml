@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: ./docker     # Dockerfile保存場所
+      dockerfile: Dockerfile-web    # Dockerfileファイル名
+    image: nn-web      # docker image name
+    container_name: nn-web       # docker container name
+    ports:
+      - 80:80
+    networks:
+      - app-net
+
+  mysql:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-db
+    restart: always
+    container_name: mysql-db
+    image: mysql-db
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: node_db
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./db_data/mysql:/var/lib/mysql
+    networks:
+      - app-net
+
+  app:
+    build:
+      context: ./docker      # Dockerfile保存場所
+      dockerfile: Dockerfile-app    # Dockerfileファイル名
+    image: n-app                  # イメージ名
+    container_name: n-app         # コンテナ名
+    ports:                          # ポート接続
+      - 3000:3000
+    volumes:                        # mount workdir
+      - $PWD/src:/docker/src
+    command: [sh, -c, npm install && npm start]
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: bridge
