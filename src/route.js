@@ -3,7 +3,7 @@ const IndexController = require('./controllers/index'),
     BoardController = require('./controllers/board'),
     AccountController = require('./controllers/account')
 
-module.exports = (app) => {
+exports.routing = (app) => {
 
     app.use('', IndexController);
     app.use('/account', AccountController);

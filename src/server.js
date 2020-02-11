@@ -3,11 +3,10 @@ const express = require('express'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
     flash = require("connect-flash"),
-    session = require('express-session'),
-    passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+    session = require('express-session');
 
-const models = require('./sequelize/models');
+const router = require('./route');
+const auth = require('./component/auth');
 const AccountController = require('./controllers/account');
 
 const app = express();
@@ -29,54 +28,8 @@ app.use(flash());
 // app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-//認証ロジック
-//routerのpassport.authenticate()が呼ばれたらここの処理が走る。
-passport.use(new LocalStrategy(
-    {
-        usernameField: 'name',
-        passwordField: 'password'
-    }, function(username, password, done) {
-        models.User.findOne({
-        where: {
-            name: username,
-            password: password
-        }
-        }).then(function (User) {
-            if (! User) {
-                return done(null, false);
-            }
-            const sessionData = {
-                'user': username,
-                'role': User.dataValues.role,
-            }
-            return done(null, sessionData);
-        });
-    }
-));
-
-
-// 認証した際のオブジェクトをシリアライズしてセッションに保存する。
-passport.serializeUser(function(username, done) {
-    console.log('serializeUser');
-    done(null, username);
-});
-
-
-//認証時にシリアライズしてセッションに保存したオブジェクトをデシリアライズする。
-//デシリアライズしたオブジェクトは各routerの req.user で参照できる。
-passport.deserializeUser(function(sessionData, done) {
-    done(null, {
-        name: sessionData.user,
-        role: sessionData.role,
-        msg:'my message'
-    });
-});
-
-// ファイルimport
-const router = require('./route');
-
-router(app);
-// module.exports = app;
+// 認証
+auth.passport(app);
+// ルーティング
+router.routing(app);
+module.exports = app;
