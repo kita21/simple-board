@@ -2,7 +2,7 @@ const passport = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local').Strategy;
-const models = require('../sequelize/models');
+const models = require('../models');
 const auth = require('./auth');
 
 const localLogin = new LocalStrategy({

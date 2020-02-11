@@ -15,6 +15,15 @@ module.exports = {
         allowNull: false,
       })
     })
+    .then(() => {
+      queryInterface.addColumn('user', 'role', {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 1,
+        after: 'password' // PostgreSQLでは無効なオプションです
+      })
+    });
+
     /*
       Add altering commands here.
       Return a promise to correctly handle asynchronicity.
@@ -28,6 +37,8 @@ module.exports = {
       queryInterface.removeColumn('user', 'created_at')
     ).then(() => {
       queryInterface.removeColumn('user', 'updated_at')
+    }).then(() => {
+      queryInterface.removeColumn('user', 'role')
     })
   }
 };
