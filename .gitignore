@@ -1,0 +1,6 @@
+# npmモジュールはファイル数が多く保存しない
+src/node_modules
+# マイグレーションファイルはコードに必要ない
+src/sequelize/migrations
+# local-mysqlのデータ保存場所
+db_data

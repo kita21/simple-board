@@ -22,6 +22,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'password'
     },
+    role: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'role',
+      defaultValue: 1,
+    },
     comment: {
       type: DataTypes.STRING(255),
       allowNull: false,

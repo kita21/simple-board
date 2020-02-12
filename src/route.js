@@ -1,8 +1,9 @@
-const express = require('express');
-const BoardController = require('./controllers/board'),
-    AccountController = require('./controllers/account')
+const IndexController = require('./controllers/index'),
+    BoardController = require('./controllers/board'),
+    UserController = require('./controllers/user')
 
-module.exports = (app) => {
+exports.routing = (app) => {
 
-    app.use('/account', AccountController);
+    app.use('', IndexController);
+    app.use('/user', UserController);
 }

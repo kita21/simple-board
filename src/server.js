@@ -2,10 +2,11 @@
 const express = require('express'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
-    connectFlash = require("connect-flash"),
+    flash = require("connect-flash"),
     session = require('express-session');
-// ファイルimport
+
 const router = require('./route');
+const auth = require('./component/auth');
 
 const app = express();
 
@@ -21,9 +22,13 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
-app.use(connectFlash());
+app.use(flash());
 
 // app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-router(app);
+// 認証
+auth.passport(app);
+// ルーティング
+router.routing(app);
+module.exports = app;
