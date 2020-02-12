@@ -3,9 +3,13 @@ const router = express.Router();
 
 router.get('', (req, res, next) => {
     const message = req.flash();
-    console.log(message);
+    // const message = flash.msg;
+    // const loginMsg = flash.success;
+    // console.log(message);
+    // console.log(loginMsg);
     const data = {
-        message: message.success
+        msg: message.msg,
+        loginMsg: message.success
     }
     res.render('index', data);
 });

@@ -13,14 +13,14 @@ exports.passport = (app) => {
         {
             usernameField: 'name',
             passwordField: 'password'
-        }, function(username, password, done) {
+        }, function (username, password, done) {
             models.User.findOne({
                 where: {
                     name: username,
                     password: password
                 }
             }).then(function (User) {
-                if (! User) {
+                if (!User) {
                     return done(null, false);
                 }
                 const sessionData = {
@@ -33,7 +33,7 @@ exports.passport = (app) => {
     ));
 
     // 認証した際のオブジェクトをシリアライズしてセッションに保存する。
-    passport.serializeUser(function(username, done) {
+    passport.serializeUser(function (username, done) {
         console.log('serializeUser');
         done(null, username);
     });
@@ -41,12 +41,30 @@ exports.passport = (app) => {
 
     //認証時にシリアライズしてセッションに保存したオブジェクトをデシリアライズする。
     //デシリアライズしたオブジェクトは各routerの req.user で参照できる。
-    passport.deserializeUser(function(sessionData, done) {
+    passport.deserializeUser(function (sessionData, done) {
         done(null, {
             name: sessionData.user,
             role: sessionData.role,
-            msg:'my message'
+            msg: 'my message'
         });
     });
+}
+
+exports.isLogined = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        res.redirect("/user/login");
+    }
+}
+
+exports.isAdminLogined = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        res.redirect("/user/login");
+    }
+    if (req.user.name === 2) {
+        res.redirect("/user/login");
+    }
+    return next();
 }
 

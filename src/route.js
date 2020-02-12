@@ -1,10 +1,10 @@
 const express = require('express');
 const IndexController = require('./controllers/index'),
     BoardController = require('./controllers/board'),
-    AccountController = require('./controllers/account')
+    UserController = require('./controllers/user')
 
 exports.routing = (app) => {
 
     app.use('', IndexController);
-    app.use('/account', AccountController);
+    app.use('/user', UserController);
 }

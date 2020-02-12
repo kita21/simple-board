@@ -7,7 +7,6 @@ const express = require('express'),
 
 const router = require('./route');
 const auth = require('./component/auth');
-const AccountController = require('./controllers/account');
 
 const app = express();
 

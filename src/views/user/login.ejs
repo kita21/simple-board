@@ -10,11 +10,11 @@
         <head>
             <h1><%= title %></h1>
         </head>
-        <h2><%= message %></h2>
+        <h2><%= loginMsg %></h2>
 
         <div role="main">
             <p><%= content %></p>
-            <form method="post" action="/account/login">
+            <form method="post" action="/user/login">
                 <table>
                     <tr>
                         <th>NAME</th>
@@ -32,7 +32,7 @@
             </form>
             <p>
                 <a href="/">&lt;&lt; Top へ戻る</a>
-                <a href="/account/add">アカウントの作成&gt;&gt;</a></p>
+                <a href="/user/add">アカウントの作成&gt;&gt;</a></p>
             </p>
         </div>
     </body>
