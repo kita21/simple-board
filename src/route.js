@@ -1,4 +1,3 @@
-const express = require('express');
 const IndexController = require('./controllers/index'),
     BoardController = require('./controllers/board'),
     UserController = require('./controllers/user')
