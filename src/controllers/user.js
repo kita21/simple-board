@@ -3,6 +3,7 @@ const express = require('express'),
 // ファイルimport
 const models = require("../sequelize/models");
 const auth = require('../component/auth');
+const column = require('../config/column');
 
 const router = express.Router();
 
@@ -39,7 +40,7 @@ router.post('/create', auth.isLogined, (req, res) => {
     models.User.create({
         name : req.body.name,
         password : req.body.password,
-        role: 1,
+        role: column.role.member,
         comment : req.body.comment
     }).then(user => {
         return user.save();
@@ -56,6 +57,14 @@ router.get('/logout', auth.isLogined, (req, res) => {
     req.logout();
     req.flash('msg', 'ログアウトしました');
     res.redirect('/');
+});
+
+router.get('/info', auth.isLogined, (req, res) => {
+    const data = {
+        'username': req.user.name,
+        'role': column.role[req.user.role]
+    }
+    res.render('user/info', data);
 });
 
 module.exports = router;

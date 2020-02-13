@@ -2,6 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const models = require('../sequelize/models');
+const column = require('../config/column');
 
 exports.passport = (app) => {
     app.use(passport.initialize());
@@ -24,8 +25,9 @@ exports.passport = (app) => {
                     return done(null, false);
                 }
                 const sessionData = {
+                    'id': User.dataValues.id,
                     'user': username,
-                    'role': User.dataValues.role,
+                    'role': User.dataValues.role
                 }
                 return done(null, sessionData);
             });
@@ -43,9 +45,9 @@ exports.passport = (app) => {
     //デシリアライズしたオブジェクトは各routerの req.user で参照できる。
     passport.deserializeUser(function (sessionData, done) {
         done(null, {
+            id: sessionData.id,
             name: sessionData.user,
             role: sessionData.role,
-            msg: 'my message'
         });
     });
 }
@@ -62,7 +64,7 @@ exports.isAdminLogined = (req, res, next) => {
     if (!req.isAuthenticated()) {
         res.redirect("/user/login");
     }
-    if (req.user.name === 2) {
+    if (req.user.role !== column.role.admin) {
         res.redirect("/user/login");
     }
     return next();
