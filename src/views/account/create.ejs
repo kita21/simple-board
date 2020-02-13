@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>ユーザ追加</h1>
+        <div role="main">
+            <form method="post" action="/account/create">
+                <table>
+                    <tr>
+                        <th>NAME</th>
+                        <td><input type="text" name="name"></td>
+                    </tr>
+                    <tr>
+                        <th>ROLE</th>
+                        <td>
+                            <select name="role">
+                                <option value=1>member</option>
+                                <option value=2>admin</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>PASSWORD</th>
+                        <td><input type="password" name="password"></td>
+                    </tr>
+                        <th>COMMENT</th>
+                        <td><input type="text" name="comment"></td>
+                    <tr>
+                        <th></th>
+                        <td><input type="submit" value="作成"></td>
+                    </tr>
+                </table>
+            </form>
+            <p>
+                <a href="/">&lt;&lt; Top へ戻る</a>
+                <a href="/user/create">アカウントの作成&gt;&gt;</a></p>
+            </p>
+        </div>
+    </body>
+</html>

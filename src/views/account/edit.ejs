@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <h1>ユーザ編集</h1>
+    </header>
+    <body>
+        <table>
+            <tr>
+                <th>ID</th>
+                <td><%= user.dataValues.id %></td>
+            </tr>
+            <tr>
+                <th>name</th>
+                <td><input type="text" name="name" value="<%= user.dataValues.name %>"></td>
+            </tr>
+            <tr>
+                <th>password</th>
+                <td><input type="text" name="name" value="<%= user.dataValues.password %>"></td>
+            </tr>
+            <tr>
+                <th>role</th>
+                <td>
+                    <select name="role">
+                        <option value=1 selected>member</option>
+                        <option value=2>admin</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </body>
+    <footer>
+        <p><a href="/account">管理画面のTOP</a></p>
+    </footer>
+</html>
